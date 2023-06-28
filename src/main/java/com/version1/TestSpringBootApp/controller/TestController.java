@@ -13,4 +13,9 @@ public class TestController {
         return "Hello Everyone";
     }
 
+    @GetMapping("/2")
+    public String test() {
+        return "2";
+    }
+
 }
