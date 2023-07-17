@@ -2,10 +2,9 @@ package com.version1.TestSpringBootApp.controller;
 
 import com.version1.TestSpringBootApp.model.Person;
 import com.version1.TestSpringBootApp.repository.PersonRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/test")
@@ -23,8 +22,11 @@ public class TestController {
     }
 
     @PostMapping
-    public Person testPostController() {
-        return personRepository.save(new Person("Alex", "Bloomfield"));
+    @Transactional
+    public Person testPostController(@RequestBody @Valid Person person) {
+        Person p = personRepository.save(person);
+        System.out.println(p.getFirstName());
+        return p;
     }
 
 }
