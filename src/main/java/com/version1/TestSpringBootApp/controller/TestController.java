@@ -25,7 +25,7 @@ public class TestController {
     @Transactional
     public Person testPostController(@RequestBody @Valid Person person) {
         Person p = personRepository.save(person);
-        System.out.println(p.getFirstName());
+        System.out.println(p.getFirstName() + " " + p.getSurname());
         return p;
     }
 
