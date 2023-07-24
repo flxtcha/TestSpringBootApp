@@ -24,7 +24,33 @@ public class TestController {
     @PostMapping
     @Transactional
     public Person testPostController(@RequestBody @Valid Person person) {
-        Person p = personRepository.save(person);
+        //never hit this line
+        Person p = personRepository.save(person); // throws new Database error
+
+        System.out.println(p.getFirstName() + " " + p.getSurname());
+        return p;
+    }
+
+    @PostMapping("/path/firstname/{firstName}/surname/{surname}/")
+//    @PostMapping("{firstName}/{surname}")
+    public Person testPath(
+            @PathVariable String firstName,
+            @PathVariable String surname
+    ) {
+        Person p = new Person(firstName, surname);
+        personRepository.save(p);
+        System.out.println(p.getFirstName() + " " + p.getSurname());
+        return p;
+    }
+
+    @PostMapping("/requestParam")
+//    @PostMapping("{firstName}/{surname}")
+    public Person testVariable(
+            @RequestParam String firstName,
+            @RequestParam String surname
+    ) {
+        Person p = new Person(firstName, surname);
+        personRepository.save(p);
         System.out.println(p.getFirstName() + " " + p.getSurname());
         return p;
     }
